@@ -4,7 +4,7 @@ import Logo from "./images/node_avatar.png";
 const Canvas = (props) => {
     const results = props.results;
     results.length = props.resultval;
-    const currentLength = results.length;
+    const currentResultsLength = results.length;
     const canvasRef = useRef(null);
 
     useEffect(() => {
@@ -13,14 +13,15 @@ const Canvas = (props) => {
         draw(context, canvas);
     }, [draw]);
 
-    function creatPieBorder(ctx, num) {
+    function creatPieBorder(ctx, borderLineWidth) {
         ctx.strokeStyle = "#ffffff";
-        ctx.lineWidth = num;
+        ctx.lineWidth = borderLineWidth;
         ctx.stroke();
     }
 
     function textStyle(ctx, textX, textY) {
-        ctx.font = `900 ${27 - (currentLength)}pt Calibri`;
+        let pieTextFontSize = 27;
+        ctx.font = `900 ${pieTextFontSize - currentResultsLength}pt Calibri`;
         ctx.fillStyle = "white";
         ctx.textBaseline = "middle";
         ctx.textAlign = "center";
@@ -28,23 +29,31 @@ const Canvas = (props) => {
     }
 
     function textRotate(ctx, currentAngle) {
-        if (currentLength === 1) {
+        let pieFontRotatePercent = currentResultsLength * 19 / 100;
+        if (currentResultsLength === 1) {
             ctx.rotate(currentAngle + Math.PI / 2)
-        } else if (currentLength >= 3) {
-            ctx.rotate(currentAngle + (currentLength * 19 / 100));
+        } else if (currentResultsLength >= 3) {
+            ctx.rotate(currentAngle + pieFontRotatePercent);
         } else {
             ctx.rotate(currentAngle);
         }
     }
 
     function createCenterImageCanvas(ctx, cnv, pattern, thumbImg) {
+        let arcRadiusSize = 125;
+        let startAngle = 0;
+        let endAngle = Math.PI * 2.2;
+        let dx = 50;
+        let dy = 50;
+        let dWidth = 300;
+        let dHeight = 300;
         ctx.beginPath();
         ctx.fillStyle = pattern;
-        ctx.arc(cnv.width / 2, cnv.height / 2, 125, 0, Math.PI * 2.2);  // text size
+        ctx.arc(cnv.width / 2, cnv.height / 2, arcRadiusSize, startAngle, endAngle);
         ctx.fill();
         ctx.save();
         ctx.clip();
-        ctx.drawImage(thumbImg, 50, 50, 300, 300);
+        ctx.drawImage(thumbImg, dx, dy, dWidth, dHeight);
         ctx.closePath();
         ctx.restore();
         if (results.length > 0) {
@@ -63,7 +72,7 @@ const Canvas = (props) => {
 
 // eslint-disable-next-line react-hooks/exhaustive-deps
     function draw(ctx, cnv) {
-        let total = results.reduce((sum, {narek}) => sum + narek, 0);
+        let total = results.reduce((sum, {count}) => sum + count, 0);
         let currentAngle = -0.5 * Math.PI;
         let centerX = cnv.width / 2;
         let centerY = cnv.height / 2;
@@ -72,17 +81,20 @@ const Canvas = (props) => {
             creatPieBorder(ctx, 3);
 // ------ create pie -------
             let sliceAngle = (result.count / total) * 2 * Math.PI;
+            let piesChartRadiusSize = 200;
             ctx.beginPath();
             ctx.save();
-            ctx.arc(centerX, centerY, 200, currentAngle, currentAngle + sliceAngle);
+            ctx.arc(centerX, centerY, piesChartRadiusSize, currentAngle, currentAngle + sliceAngle);
             currentAngle += sliceAngle;
             ctx.lineTo(centerX, centerY);
             ctx.fillStyle = result.color;
             ctx.fill();
 // ------- text position
             let middleAngle = currentAngle + (-0.5 * sliceAngle);
-            let textX = Math.cos(middleAngle) * 157 + centerX;
-            let textY = Math.sin(middleAngle) * 157 + centerY;
+            let pieTextPosition = 157;
+            let textX = Math.cos(middleAngle) * pieTextPosition + centerX;
+            let textY = Math.sin(middleAngle) * pieTextPosition + centerY;
+
             creatPieBorder(ctx, 2);
             textStyle(ctx, textX, textY);
             textRotate(ctx, currentAngle);
