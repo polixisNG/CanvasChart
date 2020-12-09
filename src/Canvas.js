@@ -46,7 +46,7 @@ const Canvas = (props) => {
             }
         }
 
-        function createCenterImageCanvas(ctx, canvas, pattern, thumbImg) {
+        function createCenterImageCanvas(ctx, canvas, pattern, griCodesImg) {
             let arcRadiusSize = 125
             let startAngle = 0
             let endAngle = Math.PI * 2.2
@@ -60,7 +60,7 @@ const Canvas = (props) => {
             ctx.fill()
             ctx.save()
             ctx.clip()
-            ctx.drawImage(thumbImg, drawX, drawY, dWidth, dHeight)
+            ctx.drawImage(griCodesImg, drawX, drawY, dWidth, dHeight)
             ctx.closePath()
             ctx.restore()
             if (results.length > 0) {
@@ -102,11 +102,11 @@ const Canvas = (props) => {
             ctx.restore()
         }
 // ------- center image ---------
-        let thumbImg = new Image()
-        thumbImg.src = Logo
-        let pattern = ctx.createPattern(thumbImg, 'no-repeat')
-        thumbImg.onload = function () {
-            createCenterImageCanvas(ctx, canvas, pattern, thumbImg)
+        let griCodesImg = new Image()
+        griCodesImg.src = Logo
+        let pattern = ctx.createPattern(griCodesImg, 'no-repeat')
+        griCodesImg.onload = function () {
+            createCenterImageCanvas(ctx, canvas, pattern, griCodesImg)
         }
     }
 
