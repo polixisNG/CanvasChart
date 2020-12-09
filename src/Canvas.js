@@ -63,7 +63,7 @@ const Canvas = (props) => {
 
 // eslint-disable-next-line react-hooks/exhaustive-deps
     function draw(ctx, cnv) {
-        let total = results.reduce((sum, {count}) => sum + count, 0);
+        let total = results.reduce((sum, {narek}) => sum + narek, 0);
         let currentAngle = -0.5 * Math.PI;
         let centerX = cnv.width / 2;
         let centerY = cnv.height / 2;
