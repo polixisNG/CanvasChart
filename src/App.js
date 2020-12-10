@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState} from "react";
+import React, {useState} from "react";
 // import CanvasSecond from "./CanvasSecond";
 import Canvas from "./Canvas";
 
@@ -28,19 +28,12 @@ function App() {
     }
     return (
         <div className="App">
-            <Canvas results = {results} resultval = {resultVal}/>
+            <Canvas results={results} resultval={resultVal}/>
             {/*<CanvasSecond results = {results} resultval = {resultVal}/>*/}
             <select onChange={selectOnchange} name="count" id="selectCount">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8">8</option>
-                <option value="9">9</option>
-                <option value="10">10</option>
+                {Object.keys(newData).map((i, k) => {
+                    return <option key={i} value={k + 1}>{k + 1}</option>
+                })}
             </select>
         </div>
     );
