@@ -1,4 +1,4 @@
-import React, {useRef, useEffect} from 'react'
+import React, {useEffect, useRef} from 'react'
 import Logo from "./images/node_avatar.png"
 
 const Canvas = (props) => {
@@ -13,7 +13,6 @@ const Canvas = (props) => {
         draw(context, canvas)
     }, [draw])
 
-// eslint-disable-next-line react-hooks/exhaustive-deps
     function draw(ctx, canvas) {
         let total = results.reduce((sum, {count}) => sum + count, 0)
         let currentAngle = -0.5 * Math.PI
@@ -46,16 +45,15 @@ const Canvas = (props) => {
             }
         }
 
-        function createCenterImageCanvas(ctx, canvas, pattern, griCodesImg) {
-            let arcRadiusSize = 125
+        function createCenterImageCanvas(ctx, canvas, griCodesImg) {
+            let arcRadiusSize = 130
             let startAngle = 0
             let endAngle = Math.PI * 2.2
-            let drawX = 50
-            let drawY = 50
-            let dWidth = 300
-            let dHeight = 300
+            let drawX = 60
+            let drawY = 60
+            let dWidth = 280
+            let dHeight = 280
             ctx.beginPath()
-            ctx.fillStyle = pattern
             ctx.arc(canvas.width / 2, canvas.height / 2, arcRadiusSize, startAngle, endAngle)
             ctx.fill()
             ctx.save()
@@ -90,7 +88,7 @@ const Canvas = (props) => {
             ctx.fill()
 // ------- text position
             let middleAngle = currentAngle + (-0.5 * sliceAngle)
-            let pieTextPosition = 157
+            let pieTextPosition = 160
             let textX = Math.cos(middleAngle) * pieTextPosition + centerX
             let textY = Math.sin(middleAngle) * pieTextPosition + centerY
 
@@ -104,9 +102,9 @@ const Canvas = (props) => {
 // ------- center image ---------
         let griCodesImg = new Image()
         griCodesImg.src = Logo
-        let pattern = ctx.createPattern(griCodesImg, 'no-repeat')
+        // ctx.fillStyle = ctx.createPattern(griCodesImg, 'no-repeat')
         griCodesImg.onload = function () {
-            createCenterImageCanvas(ctx, canvas, pattern, griCodesImg)
+            createCenterImageCanvas(ctx, canvas, griCodesImg)
         }
     }
 

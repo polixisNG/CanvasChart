@@ -8,7 +8,7 @@ let newData = {
     INFO: {"color": "#8D6CAB"},
     PEP: {"color": "#1B89B7"},
     CLOSED: {"color": "#6b6b6b"},
-    CRIME: {"color": "green"},
+    CRIME: {"color": "#69ae4d"},
     REACT: {"color": "#159999"},
     ANGULAR: {"color": "#444488"},
     NAREK: {"color": "#75920e"},
