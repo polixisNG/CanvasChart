@@ -13,6 +13,7 @@ const Canvas = (props) => {
         draw(context, canvas)
     }, [draw])
 
+// eslint-disable-next-line react-hooks/exhaustive-deps
     function draw(ctx, canvas) {
         let total = results.reduce((sum, {count}) => sum + count, 0)
         let currentAngle = -0.5 * Math.PI
